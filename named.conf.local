@@ -8,10 +8,10 @@
 
 zone "dominio" IN {
 	type master;
-	file "/etc/bind/forward.dominio.pt";
+	file "/etc/bind/forward.dominio";
 };
 
 zone "ipdaarpa" IN {
 	type master;
-	file "/etc/bind/reverse.dominio.pt";
+	file "/etc/bind/reverse.dominio";
 };
