@@ -3,19 +3,19 @@ from os import system as s
 apti = "apt install -y "
 Ans = "null"
 ComProxy = "null"
-User[]
+User = []
 Users = ""
 
 s("cd /")
-#s("cd /LinuxServices/")
+s("cd /LinuxServices/")
 
 while (Ans != "s"):
     s("clear")
     IpMaquina = input("Introduzir ip da maquina: ")
-    while (ComProxy != "s" or ComProxy != "n"):
+    while (ComProxy != "s" and ComProxy != "n"):
         s("clear")
-        ComProxy = input("Está a usar proxy?       s/n")
-    if ComProxy = "s":
+        ComProxy = input("Está a usar proxy?       s/n: ")
+    if ComProxy == "s":
         Proxy = input("Introduzir proxy (Exemplo: 172.16.10.251:8080): ")
     s("clear")
     DefGateway = input("Introduzir ip Default Gateway: ")
@@ -26,7 +26,7 @@ while (Ans != "s"):
     s("clear")
     Password = input("Introduzir a palavra pass geral (para tudo): ")
     s("clear")
-    Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>")
+    Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>: ")
     s("clear")
     NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
     s("clear")
@@ -35,13 +35,13 @@ while (Ans != "s"):
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
     for i in range(Nusers):
-        User.append(input("Coloque o nome do " + i+1 + " User: "))
+        User.append(input("Coloque o nome do " + str(i+1) + " User: "))
         s("clear")
 
     print("IP da maquina: " + IpMaquina)
-    if ComProxy = "s":
+    if ComProxy == "s":
         print("Proxy: " + Proxy)
-    else
+    else:
         print("Sem Proxy")
     print("Default Gateway: " + DefGateway)
     print("DNS: " + Dns)
@@ -174,7 +174,7 @@ s("mv ImagemHtml.jpg /var/www/html/")
 s("service apache2 restart")
 
 #openfire
-s("mysql -u root -p")
+s("mysql -u root --skip-password")
 s("create database openfire;")
 s("CREATE USER 'admin'@'localhost' IDENTIFIED BY '" + Password + "';")
 s("grant all privileges on openfire.* to 'admin'@'localhost'")
@@ -186,7 +186,7 @@ if ComProxy == "s":
 s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb \\")
 s("-O openfire.deb")
 s("dpkg -i openfire.deb")
-s("mysql -u root -p")
+s("mysql -u root --skip-password")
 s("source /usr/share/openfire/resources/database/openfire_mysql.sql;")
 s("service openfire restart")
 
@@ -194,6 +194,8 @@ for i in range(Nusers):
     s('echo " " >> /etc/asterisk/sip.conf')
     s('echo "[' + User[i] + ']" >> /etc/asterisk/sip.conf') 
     s('echo "type=friend" >> /etc/asterisk/sip.conf')
+    s('echo "port=5060" >> /etc/asterisk/sip.conf')
+    s('echo "nat=yes" >> /etc/asterisk/sip.conf')
     s('echo "qualify=yes" >> /etc/asterisk/sip.conf')
     RegContext = str(i+1)
     RegContext = RegContext.zfill(3)
@@ -250,6 +252,9 @@ for i in range(Nusers):
 s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
 s("/etc/init.d/postfix restart")
+
+s("ip link set enp0s3 down")
+s("ip link set enp0s8 up")
 
 
 
