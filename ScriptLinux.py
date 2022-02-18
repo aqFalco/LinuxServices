@@ -175,8 +175,8 @@ s("mysql -u root --skip-password -e \"create database openfire; CREATE USER 'adm
 if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
-s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb \\")
-s("-O openfire.deb")
+s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
+#s("-O openfire.deb")
 s("dpkg -i openfire.deb")
 s("mysql -u root --skip-password -e \"use openfire; source /usr/share/openfire/resources/database/openfire_mysql.slq;\"")
 s("service openfire restart")
