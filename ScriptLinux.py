@@ -2,7 +2,6 @@ from os import system as s
 
 apti = "apt install -y "
 Ans = "null"
-ComProxy = "null"
 User = []
 Users = ""
 
@@ -11,6 +10,7 @@ s("cd /LinuxServices/")
 
 while (Ans != "s"):
     s("clear")
+    ComProxy = "null"
     IpMaquina = input("Introduzir ip da maquina: ")
     while (ComProxy != "s" and ComProxy != "n"):
         s("clear")
