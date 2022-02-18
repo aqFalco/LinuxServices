@@ -6,7 +6,7 @@ User = []
 Users = ""
 
 s("cd /")
-s("cd /LinuxServices/")
+s("cd LinuxServices/")
 
 while (Ans != "s"):
     s("clear")
