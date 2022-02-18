@@ -174,20 +174,14 @@ s("mv ImagemHtml.jpg /var/www/html/")
 s("service apache2 restart")
 
 #openfire
-s("mysql -u root --skip-password")
-s("create database openfire;")
-s("CREATE USER 'admin'@'localhost' IDENTIFIED BY '" + Password + "';")
-s("grant all privileges on openfire.* to 'admin'@'localhost'")
-s("flush privileges;")
-s("exit")
+s("mysql -u root --skip-password -e \"create database openfire; CREATE USER 'admin'@'localhost' IDENTIFIED BY '" + Password + "'; grant all privileges on openfire.* to 'admin'@'localhost'; flush privileges;\"")
 if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
 s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb \\")
 s("-O openfire.deb")
 s("dpkg -i openfire.deb")
-s("mysql -u root --skip-password")
-s("source /usr/share/openfire/resources/database/openfire_mysql.sql;")
+s("mysql -u root --skip-password -e \"use openfire; source /usr/share/openfire/resources/database/openfire_mysql.slq;\"")
 s("service openfire restart")
 
 for i in range(Nusers):
