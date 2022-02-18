@@ -30,8 +30,6 @@ while (Ans != "s"):
     s("clear")
     NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
     s("clear")
-    TituloSite = input("Introduza o titulo que quer no site: ")
-    s("clear")
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
     for i in range(Nusers):
@@ -49,7 +47,6 @@ while (Ans != "s"):
     print("Password: " + Password)
     print("Range: " + Range)
     print("Nome da maquina: " + NomeMaquina)
-    print("Titulo do site: " + TituloSite)
     for i in range(Nusers):
         if i != Nusers-1:
             Users = Users + User[i] + ", "
@@ -162,7 +159,7 @@ s("service bind9 restart")
 file = "index.html"
 fin = open(file, "rt")
 data = fin.read()
-data = data.replace("titulosite", TituloSite)
+data = data.replace("titulosite", "Trocar em /var/www/html/index.html")
 fin.close()
 fin = open(file, "wt")
 fin.write(data)
