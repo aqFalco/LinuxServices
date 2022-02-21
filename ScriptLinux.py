@@ -1,4 +1,5 @@
 from os import system as s
+import os.path
 
 apti = "apt install -y "
 Ans = "null"
@@ -60,8 +61,10 @@ while (Ans != "s"):
 s("ip link set enp0s3 up")
 s("ip link set enp0s8 down")
 s("apt update && apt upgrade -y")
-for i in ["isc-dhcp-server", "bind9", "apache2", "asterisk", "default-jre", "mysql-server"]: #services to install
-    s(apti + i)
+
+while(!os.path.isfile('/etc/dhcp/dhcpd') and !os.path.isfile('/etc/bind') and !os.path.isfile('/etc/asterisk')):
+    for i in ["isc-dhcp-server", "bind9", "apache2", "asterisk", "default-jre", "mysql-server"]: #services to install
+        s(apti + i)
 
 #dhcp
 Ip = IpMaquina.split(".")
@@ -176,7 +179,9 @@ if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
 s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
+s("cd /")
 s("dpkg -i openfire.deb")
+s("cd LinuxServices/")
 s("mysql -u root --skip-password -e \"use openfire; source /usr/share/openfire/resources/database/openfire_mysql.slq;\"")
 s("service openfire restart")
 
@@ -243,6 +248,9 @@ s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
 s("/etc/init.d/postfix restart")
 
+s("rm ScriptLinux.py")
+s("cd /")
+s("rm -r /LinuxServices")
 s("ip link set enp0s3 down")
 s("ip link set enp0s8 up")
 
