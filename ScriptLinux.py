@@ -62,7 +62,7 @@ s("ip link set enp0s3 up")
 s("ip link set enp0s8 down")
 s("apt update && apt upgrade -y")
 
-while(!os.path.isfile('/etc/dhcp/dhcpd') and !os.path.isfile('/etc/bind') and !os.path.isfile('/etc/asterisk')):
+while(!os.path.isdir('/etc/dhcp/dhcpd') and !os.path.isdir('/etc/bind') and !os.path.isdir('/etc/asterisk')):
     for i in ["isc-dhcp-server", "bind9", "apache2", "asterisk", "default-jre", "mysql-server"]: #services to install
         s(apti + i)
 
@@ -178,7 +178,8 @@ s("mysql -u root --skip-password -e \"create database openfire; CREATE USER 'adm
 if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
-s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
+while (!os.path.isfile('/openfire.deb')):
+    s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
 s("cd /")
 s("dpkg -i openfire.deb")
 s("cd LinuxServices/")
