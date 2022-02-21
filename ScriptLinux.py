@@ -179,7 +179,9 @@ if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
 Error = 0
-while (os.path.isfile('/openfire.deb') == False):
+while (os.path.isfile('/LinuxServices/openfire.deb') == False):
+    s("ip link set enp0s8 up")
+    s("ip link set enp0s3 down")
     s("ip link set enp0s3 up")
     s("ip link set enp0s8 down")
     s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
