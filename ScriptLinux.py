@@ -62,7 +62,7 @@ s("ip link set enp0s3 up")
 s("ip link set enp0s8 down")
 s("apt update && apt upgrade -y")
 
-while(!os.path.isdir('/etc/dhcp/dhcpd') and !os.path.isdir('/etc/bind') and !os.path.isdir('/etc/asterisk')):
+while (!os.path.isdir('/etc/dhcp/dhcpd') and !os.path.isdir('/etc/bind') and !os.path.isfile('/etc/asterisk')):
     for i in ["isc-dhcp-server", "bind9", "apache2", "asterisk", "default-jre", "mysql-server"]: #services to install
         s(apti + i)
 
