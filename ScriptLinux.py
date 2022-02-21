@@ -188,8 +188,7 @@ while (os.path.isfile('/openfire.deb') == False):
         s("clear")
         print("Ocurreu um erro a fazer o download do openfire.deb...")
         print("               Processo a Finalizar...")
-        pass
-s("cd /")
+        exit()
 s("dpkg -i openfire.deb")
 s("cd LinuxServices/")
 s("mysql -u root --skip-password -e \"use openfire; source /usr/share/openfire/resources/database/openfire_mysql.slq;\"")
