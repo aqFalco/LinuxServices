@@ -178,8 +178,17 @@ s("mysql -u root --skip-password -e \"create database openfire; CREATE USER 'adm
 if ComProxy == "s":
     s('export "http_proxy=http://' + Proxy + '/')
     s('export "https_proxy=https://' + Proxy + '/')
-while (!os.path.isfile('/openfire.deb')):
+Error = 0
+while (os.path.isfile('/openfire.deb') == False):
+    s("ip link set enp0s3 up")
+    s("ip link set enp0s8 down")
     s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
+    Error+=1
+    if Error>=5:
+        s("clear")
+        print("Ocurreu um erro a fazer o download do openfire.deb...")
+        print("               Processo a Finalizar...")
+        pass
 s("cd /")
 s("dpkg -i openfire.deb")
 s("cd LinuxServices/")
