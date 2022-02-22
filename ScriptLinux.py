@@ -2,6 +2,7 @@ from os import system as s
 import os.path
 import time
 import subprocess
+import crypt
 
 apti = "apt install -y "
 Ans = "null"
@@ -93,6 +94,7 @@ while (Ans != "s"):
 
 s("ip link set enp0s3 up")
 s("ip link set enp0s8 down")
+time.sleep(3)
 s("apt update && apt upgrade -y")
 
 while (os.path.isdir('/etc/dhcp/dhcpd') == False and os.path.isdir('/etc/bind') == False and os.path.isfile('/etc/asterisk') == False):
