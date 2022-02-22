@@ -62,14 +62,13 @@ while (Ans != "s"):
     s("clear")
     time.sleep(0.3)
     Nusers = int(input("Introduza o numero de utilizadores: "))
-    s("clear")
     User = []
     i = 0
     while i < Nusers:
         s("clear")
         User.append(input("Coloque o nome do " + str(i+1) + " User: "))
-        while User[i] != "":
-            i++
+        if User[i] != "":
+            i+=1
 
     print("IP da maquina: " + IpMaquina)
     if ComProxy == "s":
@@ -215,7 +214,9 @@ if ComProxy == "s":
 Error = 0
 while (os.path.isfile('/LinuxServices/openfire.deb') == False):
     s("ip link set enp0s8 up && ip link set enp0s3 down")
-    s("ip link set enp0s3 up && ip link set enp0s8 down && wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
+    s("ip link set enp0s3 up && ip link set enp0s8 down")
+    time.sleep(5)
+    s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
     Error+=1
     if Error>=5:
         s("clear")
