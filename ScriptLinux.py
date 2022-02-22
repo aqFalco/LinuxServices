@@ -5,6 +5,7 @@ apti = "apt install -y "
 Ans = "null"
 User = []
 Users = ""
+VerificarZero = "";
 
 s("cd /")
 s("cd LinuxServices/")
@@ -12,24 +13,43 @@ s("cd LinuxServices/")
 while (Ans != "s"):
     s("clear")
     ComProxy = "null"
-    IpMaquina = input("Introduzir ip da maquina: ")
+    IpMaquina = ""
+    DefGateway = ""
+    Dns = ""
+    Dominio = ""
+    Password = ""
+    Range = ""
+    NomeMaquina = ""
+    while (IpMaquina == ""):
+        s("clear")
+        IpMaquina = input("Introduzir ip da maquina: ")
+        VerificarZero = IpMaquina.split(".")
+        if VerificarZero[3] == "0":
+            IpMaquina = ""
+            print("O IP DA MAQUINA NAO PODE SER 0(ESSE E O DE REDE)")
     while (ComProxy != "s" and ComProxy != "n"):
         s("clear")
         ComProxy = input("Está a usar proxy?       s/n: ")
     if ComProxy == "s":
         Proxy = input("Introduzir proxy (Exemplo: 172.16.10.251:8080): ")
-    s("clear")
-    DefGateway = input("Introduzir ip Default Gateway: ")
-    s("clear")
-    Dns = input("Introduzir ip DNS: ")
-    s("clear")
-    Dominio = input("Introduzir nome Dominio: ")
-    s("clear")
-    Password = input("Introduzir a palavra pass geral (para tudo): ")
-    s("clear")
-    Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>: ")
-    s("clear")
-    NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
+    while (DefGateway == ""):
+        s("clear")
+        DefGateway = input("Introduzir ip Default Gateway: ")
+    while (Dns == ""):
+        s("clear")
+        Dns = input("Introduzir ip DNS: ")
+    while (Dominio == ""):
+        s("clear")
+        Dominio = input("Introduzir nome Dominio: ")
+    while (Password == ""):
+        s("clear")
+        Password = input("Introduzir a palavra pass geral (para tudo): ")
+    while (Range == ""):
+        s("clear")
+        Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>: ")
+    while (NomeMaquina == ""):
+        s("clear")
+        NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
     s("clear")
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
@@ -222,7 +242,7 @@ s('echo "[from-internal]" >> /etc/asterisk/extensions.conf')
 for i in range(Nusers): 
     RegContext = str(i+1)
     RegContext = RegContext.zfill(3)  
-    s('echo "exten=>' + RegContext + ',1,Dial(SIP,' + User[i] + ',10)" >> /etc/asterisk/extensions.conf')
+    s('echo "exten=>' + RegContext + ',1,Dial(SIP/' + User[i] + ',10)" >> /etc/asterisk/extensions.conf')
 s('echo " " >> /etc/asterisk/extensions.conf')
 All = "exten=>all,1,Dial("
 for i in range(Nusers):
@@ -233,8 +253,10 @@ for i in range(Nusers):
 s('echo "' + All + '" >> /etc/asterisk/extensions.conf')
 s("service asterisk restart")
 
+
 s('debconf-set-selections <<< "postfix postfix/mailname string ' + Dominio + '"')
 s('debconf-set-selections <<< "postfix postfix/main_mailer_type string \'Internet Site\'"')
+s("DEBIAN_FRONTEND=noninteractive apt-get install Postfix")
 s("apt-get install --assume-yes postfix")
 
 file = "main.cf"
