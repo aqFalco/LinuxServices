@@ -60,9 +60,11 @@ while (Ans != "s"):
         s("clear")
         NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
     s("clear")
+    time.sleep(0.3)
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
     for i in range(Nusers):
+        time.sleep(0.2)
         User.append(input("Coloque o nome do " + str(i+1) + " User: "))
         s("clear")
 
@@ -259,7 +261,8 @@ for i in range(Nusers):
 s('echo "' + All + '" >> /etc/asterisk/extensions.conf')
 s("service asterisk restart")
 
-
+s("apt remove -y postfix")
+s("apt purge -y postfix")
 s('debconf-set-selections <<< "postfix postfix/mailname string ' + Dominio + '"')
 s('debconf-set-selections <<< "postfix postfix/main_mailer_type string \'Internet Site\'"')
 s("DEBIAN_FRONTEND=noninteractive apt-get install Postfix")
@@ -281,7 +284,7 @@ s(apti + " courier-imap")
 s(apti + " mailutils")
 s("maildirmake /etc/skel/Maildir")
 for i in range(Nusers):
-    s("useradd -m -p " + Password + " " + User[i])
+    subprocess.run(['useradd', '-m', '-p', Password, User[i]])
 
 s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
