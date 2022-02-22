@@ -1,5 +1,6 @@
 from os import system as s
 import os.path
+import time
 
 apti = "apt install -y "
 Ans = "null"
@@ -27,6 +28,7 @@ while (Ans != "s"):
         if VerificarZero[3] == "0":
             IpMaquina = ""
             print("O IP DA MAQUINA NAO PODE SER 0(ESSE E O DE REDE)")
+            time.sleep("1.4")
     while (ComProxy != "s" and ComProxy != "n"):
         s("clear")
         ComProxy = input("Está a usar proxy?       s/n: ")
