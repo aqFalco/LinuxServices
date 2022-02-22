@@ -63,11 +63,13 @@ while (Ans != "s"):
     time.sleep(0.3)
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
-    for i in range(Nusers):
-        User = []
-        while User[i] == "":
-            User.append(input("Coloque o nome do " + str(i+1) + " User: "))
-            s("clear")
+    User = []
+    i = 0
+    while i < Nusers:
+        s("clear")
+        User.append(input("Coloque o nome do " + str(i+1) + " User: "))
+        while User[i] != "":
+            i++
 
     print("IP da maquina: " + IpMaquina)
     if ComProxy == "s":
@@ -292,9 +294,6 @@ s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
 s("/etc/init.d/postfix restart")
 
-s("rm ScriptLinux.py")
-s("cd /")
-s("rm -r /LinuxServices")
 s("ip link set enp0s3 down")
 s("ip link set enp0s8 up")
 
