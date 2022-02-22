@@ -267,8 +267,6 @@ s("service asterisk restart")
 
 s("apt remove -y postfix")
 s("apt purge -y postfix")
-s('debconf-set-selections <<< "postfix postfix/mailname string ' + Dominio + '"')
-s('debconf-set-selections <<< "postfix postfix/main_mailer_type string \'Internet Site\'"')
 s("export DEBIAN_FRONTEND=noninteractive")
 s("DEBIAN_FRONTEND=noninteractive apt-get install Postfix")
 
@@ -276,7 +274,18 @@ file = "main.cf"
 fin = open(file, "rt")
 data = fin.read()
 data = data.replace("dominio", Dominio)
-data = data.replace("nomedamaquina", NomeMaquina)
+data = data.replace("nomemaquina", NomeMaquina)
+data = data.replace("iprede", IpRede)
+fin.close()
+fin = open(file, "wt")
+fin.write(data)
+fin.close()
+
+file = "config.dat"
+fin = open(file, "rt")
+data = fin.read()
+data = data.replace("dominio", Dominio)
+data = data.replace("nomemaquina", NomeMaquina)
 data = data.replace("iprede", IpRede)
 fin.close()
 fin = open(file, "wt")
@@ -286,7 +295,9 @@ fin.close()
 s("DEBIAN_FRONTEND=noninteractive " + apti + " courier-imap")
 s(apti + " mailutils")
 s("mv main.cf /etc/postfix")
+s("mv config.dat /var/cache/debconf/config.dat")
 s("maildirmake /etc/skel/Maildir")
+Password = crypt.crypt(Password)
 for i in range(Nusers):
     UserAdicionado = User[i]
     subprocess.run(['useradd', '-m', '-p', Password, UserAdicionado ])
