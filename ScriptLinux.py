@@ -5,16 +5,16 @@ import subprocess
 
 apti = "apt install -y "
 Ans = "null"
-User = []
-Users = ""
-VerificarZero = ""
-VerificarRange = ""
 
 s("cd /")
 s("cd LinuxServices/")
 
 while (Ans != "s"):
     s("clear")
+    User = []
+    Users = ""
+    VerificarZero = ""
+    VerificarRange = ""
     ComProxy = "null"
     IpMaquina = ""
     DefGateway = ""
@@ -64,9 +64,10 @@ while (Ans != "s"):
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
     for i in range(Nusers):
-        time.sleep(0.2)
-        User.append(input("Coloque o nome do " + str(i+1) + " User: "))
-        s("clear")
+        User[i] == ""
+        while User[i] == "":
+            User.append(input("Coloque o nome do " + str(i+1) + " User: "))
+            s("clear")
 
     print("IP da maquina: " + IpMaquina)
     if ComProxy == "s":
@@ -265,8 +266,8 @@ s("apt remove -y postfix")
 s("apt purge -y postfix")
 s('debconf-set-selections <<< "postfix postfix/mailname string ' + Dominio + '"')
 s('debconf-set-selections <<< "postfix postfix/main_mailer_type string \'Internet Site\'"')
+s("export DEBIAN_FRONTEND=noninteractive")
 s("DEBIAN_FRONTEND=noninteractive apt-get install Postfix")
-s("apt-get install --assume-yes postfix")
 
 file = "main.cf"
 fin = open(file, "rt")
@@ -280,11 +281,12 @@ fin.write(data)
 fin.close()
 
 s("mv main.cf /etc/postfix")
-s(apti + " courier-imap")
+s("DEBIAN_FRONTEND=noninteractive " + apti + " courier-imap")
 s(apti + " mailutils")
 s("maildirmake /etc/skel/Maildir")
 for i in range(Nusers):
-    subprocess.run(['useradd', '-m', '-p', Password, User[i]])
+    UserAdicionado = User[i]
+    subprocess.run(['useradd', '-m', '-p', Password, UserAdicionado ])
 
 s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
@@ -295,9 +297,4 @@ s("cd /")
 s("rm -r /LinuxServices")
 s("ip link set enp0s3 down")
 s("ip link set enp0s8 up")
-
-
-
-
-
 
