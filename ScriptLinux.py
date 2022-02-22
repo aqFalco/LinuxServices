@@ -1,12 +1,14 @@
 from os import system as s
 import os.path
 import time
+import subprocess
 
 apti = "apt install -y "
 Ans = "null"
 User = []
 Users = ""
 VerificarZero = "";
+VerificarRange
 
 s("cd /")
 s("cd LinuxServices/")
@@ -28,7 +30,7 @@ while (Ans != "s"):
         if VerificarZero[3] == "0":
             IpMaquina = ""
             print("O IP DA MAQUINA NAO PODE SER 0(ESSE E O DE REDE)")
-            time.sleep("1.4")
+            time.sleep(1.3)
     while (ComProxy != "s" and ComProxy != "n"):
         s("clear")
         ComProxy = input("Está a usar proxy?       s/n: ")
@@ -49,6 +51,10 @@ while (Ans != "s"):
     while (Range == ""):
         s("clear")
         Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>: ")
+        VerificarRange = Range.split(".")
+        if len(VerificarZero) != 7:
+            print("Formato errado, introduza novamente.")
+            time.sleep(1.3)
     while (NomeMaquina == ""):
         s("clear")
         NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
@@ -202,10 +208,8 @@ if ComProxy == "s":
     s('export "https_proxy=https://' + Proxy + '/')
 Error = 0
 while (os.path.isfile('/LinuxServices/openfire.deb') == False):
-    s("ip link set enp0s8 up")
-    s("ip link set enp0s3 down")
-    s("ip link set enp0s3 up")
-    s("ip link set enp0s8 down")
+    s("ip link set enp0s8 up && ip link set enp0s3 down")
+    s("ip link set enp0s3 up && ip link set enp0s8 down")
     s("wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_4.5.3_all.deb -O openfire.deb")
     Error+=1
     if Error>=5:
@@ -277,7 +281,7 @@ s(apti + " courier-imap")
 s(apti + " mailutils")
 s("maildirmake /etc/skel/Maildir")
 for i in range(Nusers):
-    s("useradd -m " + User[i])
+    s("useradd -m -p " + Password + " " + User[i])
 
 s("/etc/init.d/courier-imap restart")
 s("/etc/init.d/courier-authdaemon restart")
