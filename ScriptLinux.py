@@ -7,8 +7,8 @@ apti = "apt install -y "
 Ans = "null"
 User = []
 Users = ""
-VerificarZero = "";
-VerificarRange
+VerificarZero = ""
+VerificarRange = ""
 
 s("cd /")
 s("cd LinuxServices/")
@@ -52,9 +52,10 @@ while (Ans != "s"):
         s("clear")
         Range = input("Introduzir Range de ip's  \n  Exemplo: <192.168.50.5 192.168.50.35>: ")
         VerificarRange = Range.split(".")
-        if len(VerificarZero) != 7:
+        if len(VerificarRange) != 7:
             print("Formato errado, introduza novamente.")
             time.sleep(1.3)
+            Range = ""
     while (NomeMaquina == ""):
         s("clear")
         NomeMaquina = input("Introduzir Nome da maquina (root@<nome_aqui>): ")
