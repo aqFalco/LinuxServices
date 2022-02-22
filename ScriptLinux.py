@@ -64,7 +64,7 @@ while (Ans != "s"):
     Nusers = int(input("Introduza o numero de utilizadores: "))
     s("clear")
     for i in range(Nusers):
-        User[i] == ""
+        User = []
         while User[i] == "":
             User.append(input("Coloque o nome do " + str(i+1) + " User: "))
             s("clear")
@@ -280,9 +280,9 @@ fin = open(file, "wt")
 fin.write(data)
 fin.close()
 
-s("mv main.cf /etc/postfix")
 s("DEBIAN_FRONTEND=noninteractive " + apti + " courier-imap")
 s(apti + " mailutils")
+s("mv main.cf /etc/postfix")
 s("maildirmake /etc/skel/Maildir")
 for i in range(Nusers):
     UserAdicionado = User[i]
