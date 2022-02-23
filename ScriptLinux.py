@@ -1,3 +1,4 @@
+#!/bin/python3
 from os import system as s
 import os.path
 import time
