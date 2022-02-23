@@ -301,7 +301,6 @@ s("mv main.cf /etc/postfix")
 s("mv config.dat /var/cache/debconf/config.dat")
 time.sleep(1)
 s("export DEBIAN_FRONTEND=noninteractive")
-s("dpkg-reconfigure postfix")
 s("maildirmake /etc/skel/Maildir")
 Password = crypt.crypt(Password)
 for i in range(Nusers):
